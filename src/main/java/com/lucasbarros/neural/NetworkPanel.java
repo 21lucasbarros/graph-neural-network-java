@@ -64,7 +64,7 @@ public class NetworkPanel extends JPanel {
                 g2.setColor(cores.darker());
                 g2.drawOval(x - raio, y - raio, raio * 2, raio * 2);
 
-                g2.setFont(new Font("Courier New", Font.PLAIN, 11));
+                g2.setFont(new Font("Courier New", Font.PLAIN, 16));
                 FontMetrics fm = g2.getFontMetrics();
                 String texto = String.format("%.2f", valor);
                 g2.setColor(Color.WHITE);

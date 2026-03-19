@@ -17,25 +17,23 @@ public class Main {
         Neuron h = new Neuron();
         Neuron o = new Neuron();
 
-        // 2. definindo os valores de entrada da rede
-        // apenas os neurônios de entrada recebem valor manual
-        // h e o terão seus valores calculados automaticamente pelo feedForward
+        // 2. valores de entrada aleatórios entre 0 e 10
+        // apenas a camada de entrada recebe valor manual
+        // h e o têm seus valores calculados pelo feedForward
         a.setValue((Math.random() * 10));
         b.setValue((Math.random() * 10));
 
-        // 3. criando as conexões entre os neurônios com seus pesos
-        // cada conexão define quanto um neurônio influencia o próximo
+        // 3. conexões com pesos definem quanto cada neurônio influencia o próximo
         // a → h com peso 0.5 | b → h com peso 0.3 | h → o com peso 0.8
         Connection c1 = new Connection(a, h, 0.5);
         Connection c2 = new Connection(b, h, 0.3);
         Connection c3 = new Connection(h, o, 0.8);
 
-        // 4. definindo o bias de cada neurônio que calcula valor
-        // o bias é somado antes do ReLU e ajuda a rede a ajustar a ativação
+        // 4. bias é somado antes do ReLU — ajuda o neurônio a ativar mesmo com entradas pequenas
         h.setBias(1.0);
         o.setBias(-0.5);
 
-        // 5. organizando os neurônios em listas e agrupando em camadas
+        // 5. agrupando os neurônios em listas por camada
         List<Neuron> inputNeurons = new ArrayList<>();
         inputNeurons.add(a);
         inputNeurons.add(b);
@@ -57,19 +55,31 @@ public class Main {
         grafo.adicionarCamada(hiddenLayer);
         grafo.adicionarCamada(outputLayer);
 
-        // 7. executa o feedforward: percorre as camadas e calcula os valores de h e o
-        grafo.feedForward();
+        // 7. treinando a rede por 1000 iterações
+        // a cada iteração: feedForward calcula os valores, backpropagate ajusta os pesos
+        // o objetivo é que o neurônio de saída se aproxime do valor esperado
+        double esperado = 5.0;
+        double learningRate = 0.01; // tamanho do passo de ajuste dos pesos
 
-        // 8. exibe o valor final no console
+        for (int i = 0; i < 1000; i++) {
+            grafo.feedForward();
+            grafo.backpropagate(esperado, learningRate);
+
+            if (i % 100 == 0) {
+                System.out.println("iteração " + i + " → " + o.getValue());
+            }
+        }
+
+        // 8. exibe o estado final da rede no console
         ConsoleVisualizer.animarRede(grafo, 500);
         System.out.println("valor do neurônio de saída: " + o.getValue());
 
-        // 9. abre a janela gráfica com a visualização animada da rede
+        // 9. abre a janela gráfica com a visualização da rede após o treinamento
         JFrame frame = new JFrame("Neural Network");
         NetworkPanel painel = new NetworkPanel(grafo);
         frame.add(painel);
         frame.setSize(800, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // fecha o programa ao fechar a janela
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 }
