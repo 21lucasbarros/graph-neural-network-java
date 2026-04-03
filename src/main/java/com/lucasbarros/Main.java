@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
 
         // 1. criando os neurônios de cada camada
-        // a e b → entrada | h → escondida | o → saída
+        // a e b -> entrada | h -> escondida | o -> saída
         Neuron a = new Neuron();
         Neuron b = new Neuron();
         Neuron h = new Neuron();
@@ -24,14 +24,14 @@ public class Main {
         b.setValue((Math.random() * 10));
 
         // 3. conexões com pesos definem quanto cada neurônio influencia o próximo
-        // a → h com peso 0.5 | b → h com peso 0.3 | h → o com peso 0.8
-        Connection c1 = new Connection(a, h, 0.5);
-        Connection c2 = new Connection(b, h, 0.3);
-        Connection c3 = new Connection(h, o, 0.8);
+        // pesos inicializados aleatoriamente entre -1 e 1 para permitir aprendizado em ambas as direções
+        Connection c1 = new Connection(a, h, Math.random() * 2 - 1);
+        Connection c2 = new Connection(b, h, Math.random() * 2 - 1);
+        Connection c3 = new Connection(h, o, Math.random() * 2 - 1);
 
-        // 4. bias é somado antes do ReLU — ajuda o neurônio a ativar mesmo com entradas pequenas
-        h.setBias(1.0);
-        o.setBias(-0.5);
+        // 4. bias é somado antes do ReLU — também inicializado aleatoriamente entre -1 e 1
+        h.setBias(Math.random() * 2 - 1);
+        o.setBias(Math.random() * 2 - 1);
 
         // 5. agrupando os neurônios em listas por camada
         List<Neuron> inputNeurons = new ArrayList<>();
@@ -49,7 +49,7 @@ public class Main {
         Layer hiddenLayer = new Layer(hiddenNeurons);
         Layer outputLayer = new Layer(outputNeurons);
 
-        // 6. registrando as camadas na rede na ordem correta: entrada → escondida → saída
+        // 6. registrando as camadas na rede na ordem correta: entrada -> escondida -> saída
         NeuralNetwork grafo = new NeuralNetwork();
         grafo.adicionarCamada(inputLayer);
         grafo.adicionarCamada(hiddenLayer);

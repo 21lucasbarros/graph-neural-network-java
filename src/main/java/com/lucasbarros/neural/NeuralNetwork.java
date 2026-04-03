@@ -6,7 +6,7 @@ import java.util.List;
 public class NeuralNetwork {
 
     // a rede é composta por várias camadas, cada uma com seus neurônios
-    // exemplo: [[a, b], [h], [o]] → entrada, escondida, saída
+    // exemplo: [[a, b], [h], [o]] -> entrada, escondida, saída
     private List<Layer> camadas;
 
     // a rede começa vazia — as camadas são adicionadas pelo Main
@@ -14,7 +14,7 @@ public class NeuralNetwork {
         camadas = new ArrayList<>();
     }
 
-    // adiciona uma camada à rede — a ordem define entrada → escondida → saída
+    // adiciona uma camada à rede — a ordem define entrada -> escondida -> saída
     public void adicionarCamada(Layer camada) {
         camadas.add(camada);
     }

@@ -56,7 +56,7 @@ public class NetworkPanel extends JPanel {
                 int x = posX[i][j], y = posY[i][j];
                 double valor = neuronios.get(j).getValue();
 
-                // cor baseada na camada: entrada → escondida → saída
+                // cor baseada na camada: entrada -> escondida -> saída
                 Color cores = new Color(37, 99, 235);
 
                 g2.setColor(cores);
